@@ -45,3 +45,7 @@ TagManager:
     userID: 1
     uniqueID: 2428382617
     locked: 0
+  - name: Alien
+    userID: 2
+    uniqueID: 748610027
+    locked: 0

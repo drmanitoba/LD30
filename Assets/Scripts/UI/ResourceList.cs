@@ -23,15 +23,20 @@ public class ResourceList : MonoBehaviour {
 
 	void BuildList() {
 		Dictionary<string, string> resources = manager.GetResourceList();
+		int idx = 0;
 
 		foreach (KeyValuePair<string, string> pair in resources) {
 			string label;
 
+			idx++;
+
 			label = string.Format("{0}: {1}", pair.Key, pair.Value);
 
-			Transform listItem = (Transform) Instantiate(ResourceItem, Vector3.one, Quaternion.identity);
-			listItem.parent = this.transform;
+			Transform listItem = (Transform) Instantiate(ResourceItem, Vector3.zero, Quaternion.identity);
+			listItem.SetParent(this.transform);
 			Text text = listItem.gameObject.GetComponent<Text>();
+			text.rectTransform.anchoredPosition = new Vector2(.5f, .5f);
+			text.rectTransform.Translate(new Vector2(30,  -20 + ((30 * idx) * -1)));
 
 			text.text = label;
 		}

@@ -20,7 +20,7 @@ public class DialogueGUI : MonoBehaviour {
 	}
 
 	public void OnButtonClick(int buttonIdx) {
-		Debug.Log(buttonIdx);
+		Dialoguer.ContinueDialogue(buttonIdx);
 	}
 
 	private void bindDialogueEvents() {
@@ -34,7 +34,7 @@ public class DialogueGUI : MonoBehaviour {
 	private void OnTextPhase(DialoguerTextData data) {
 		textBox.text = data.text;
 
-		if (data.choices.Length > 0) {
+		if (data.choices != null) {
 			foreach (string choice in data.choices) {
 				GameObject temp = (GameObject) Instantiate(ButtonPrefab);
 				temp.transform.SetParent(ButtonPanel.transform);
@@ -45,6 +45,12 @@ public class DialogueGUI : MonoBehaviour {
 				Button button = temp.GetComponent<Button>();
 				int idx = Array.IndexOf(data.choices, choice);
 				button.onClick.AddListener(delegate { OnButtonClick(idx); });
+			}
+		} else {
+			Transform[] children = ButtonPanel.gameObject.GetComponentsInChildren<Transform>();
+
+			foreach (Transform child in children) {
+				Destroy (child.gameObject);
 			}
 		}
 	}
